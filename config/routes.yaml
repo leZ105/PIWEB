@@ -1,0 +1,6 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+app_tables_show:
+    path: '/zones/{zoneName}/tables'
+    controller: 'App\Controller\TablesController::showTablesForZone'

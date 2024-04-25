@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reservation index{% endblock %}
+
+{% block body %}
+<a href="{{ path('app_reservation_new') }}" style="display: inline-block; background-color: #f39c12; color: white; text-decoration: none; padding: 10px 20px; border-radius: 4px; margin-top: 20px; text-align: center; transition: background-color 0.3s;">Create New</a>
+
+<div style="background-color: #f8c471; padding: 20px; border-radius: 5px; overflow-x: auto;">
+    <table style="width: 100%; border-collapse: collapse; border-spacing: 0;">
+        <thead>
+            <tr style="background-color: #f39c12; color: white;">
+                <th style="padding: 8px; border: 1px solid #dddddd; text-align: left;">IdR</th>
+                <th style="padding: 8px; border: 1px solid #dddddd; text-align: left;">Zone</th>
+                <th style="padding: 8px; border: 1px solid #dddddd; text-align: left;">Dater</th>
+                <th style="padding: 8px; border: 1px solid #dddddd; text-align: left;">TableId</th>
+                <th style="padding: 8px; border: 1px solid #dddddd; text-align: left;">Status</th>
+                <th style="padding: 8px; border: 1px solid #dddddd; text-align: left;">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for reservation in reservations %}
+            <tr style="background-color: #fff;">
+                <td style="padding: 8px; border: 1px solid #dddddd; text-align: left;">{{ reservation.idR }}</td>
+                <td style="padding: 8px; border: 1px solid #dddddd; text-align: left;">{{ reservation.zone }}</td>
+                <td style="padding: 8px; border: 1px solid #dddddd; text-align: left;">{{ reservation.dater ? reservation.dater|date('Y-m-d') : '' }}</td>
+                <td style="padding: 8px; border: 1px solid #dddddd; text-align: left;">{{ reservation.tableId }}</td>
+                <td style="padding: 8px; border: 1px solid #dddddd; text-align: left;">{{ reservation.status }}</td>
+                <td style="padding: 8px; border: 1px solid #dddddd; text-align: left;">
+                    <a href="{{ path('app_reservation_show', {'idR': reservation.idR}) }}" style="padding: 8px 12px; background-color: #f39c12; border: none; color: white; text-align: center; text-decoration: none; display: inline-block; font-size: 14px; margin: 4px 2px; cursor: pointer; border-radius: 4px; transition: background-color 0.3s;">Show</a>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="7" style="padding: 8px; border: 1px solid #dddddd; text-align: center;">No records found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<br>
+<br>
+<br>
+{% endblock %}
