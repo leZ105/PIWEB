@@ -8,6 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class Tables1Type extends AbstractType
 {
@@ -19,10 +20,11 @@ class Tables1Type extends AbstractType
             'class' => Zones::class,
             'choice_label' => 'nom',
             'placeholder' => 'Select a zone',
-            'required' => true,
+            'required' => false,
         ])
-            ->add('capaciteT')
-        ;
+        ->add('capaciteT', IntegerType::class, [
+            'required' => false,
+        ]);
 
     }
 

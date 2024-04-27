@@ -10,6 +10,11 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mime\Email;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mailer\Transport;
+use Symfony\Component\Mailer\Mailer;
+use Symfony\Component\Mailer\Transport\Smtp\EsmtpTransport;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/reservation')]
@@ -69,9 +74,9 @@ class ReservationController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->sendEmail("mahourabensalem@gmail.com", "Confirmation", "Votre Reservation est confirmé");
             $entityManager->persist($reservation);
             $entityManager->flush();
-
             return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -79,6 +84,23 @@ class ReservationController extends AbstractController
             'reservation' => $reservation,
             'form' => $form,
         ]);
+    }
+
+    function sendEmail($recipientEmail, $subject, $message)
+    {
+        $transport = new EsmtpTransport('smtp.gmail.com', 587);
+        $transport->setUsername("mehergames29@gmail.com");
+        $transport->setPassword("nszgqaynqpetuucj");
+    
+        $mailer = new Mailer($transport);
+    
+        $email = (new Email())
+            ->from("pidev@gmail.com")
+            ->to($recipientEmail)
+            ->subject($subject)
+            ->text($message);
+    
+        $mailer->send($email);
     }
 
     #[Route('/{idR}', name: 'app_reservation_show', methods: ['GET'])]

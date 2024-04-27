@@ -4,35 +4,46 @@ namespace App\Form;
 
 use App\Entity\Zones;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Validator\Constraints\File;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class Zones1Type extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom')
-            ->add('description')
-            ->add('capacity')
-            ->add('image', FileType::class, [
-                'label' => 'Image',
-                'mapped' => false,
-                'required' => false,
-                'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please upload an image file',
-                    ]),
-                    new File([
-                        'mimeTypes' => ['image/jpeg', 'image/png', 'image/gif'],
-                        'mimeTypesMessage' => 'Please upload a valid image file (JPEG, PNG, GIF)',
-                    ]),
-                ],
-            ]);
-        ;
+        ->add('nom', TextType::class, [
+            'required' => false, 
+        ])
+        ->add('description', TextType::class, [
+            'required' => false, 
+        ])
+        ->add('capacity', IntegerType::class, [
+            'required' => false,
+        ])
+        ->add('image', FileType::class, [
+            'label' => 'Image',
+            'mapped' => false,
+            'required' => false,
+            'constraints' => [
+                new Assert\NotBlank([
+                    'message' => 'Please upload an image', // Error message if empty
+                ]),
+                new Assert\File([
+                    'maxSize' => '2M', // Maximum size (2 MB)
+                    'mimeTypes' => [
+                        'image/png',
+                        'image/jpeg',
+                        'image/gif',
+                    ],
+                    'mimeTypesMessage' => 'Please upload a valid image (PNG, JPEG, or GIF)', // Custom error message
+                ]),
+            ], 
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

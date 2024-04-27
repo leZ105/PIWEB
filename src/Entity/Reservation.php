@@ -21,6 +21,7 @@ class Reservation
     #[ORM\Column(name: "id_C", type: "integer", nullable: false)]
     private $idC=0;
 
+    #[Assert\NotBlank(message: "zone cannot be blank.")]
     #[ORM\ManyToOne(targetEntity: Zones::class)]
     #[ORM\JoinColumn(name: "zone", referencedColumnName: "zone_id")]
     private $zone;
@@ -67,12 +68,12 @@ class Reservation
         return $this;
     }
 
-    public function getDater(): ?\DateTimeInterface
+    public function getDater(): ?\DateTime
     {
         return $this->dater;
     }
 
-    public function setDater(\DateTimeInterface $dater): static
+    public function setDater(\DateTime $dater): static
     {
         $this->dater = $dater;
 

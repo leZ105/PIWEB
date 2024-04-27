@@ -37,6 +37,7 @@ class TablesBackController extends AbstractController
             $entityManager->persist($table);
             $entityManager->flush();
 
+            flash()->addSuccess('Your Table has been edited.');
             return $this->redirectToRoute('app_tables_back_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -63,6 +64,7 @@ class TablesBackController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
+            flash()->addWarning('Your Table has been edited.');
             return $this->redirectToRoute('app_tables_back_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -76,6 +78,7 @@ class TablesBackController extends AbstractController
     public function delete(Request $request, Tables $table, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$table->getTableId(), $request->request->get('_token'))) {
+            flash()->addInfo('Your Table has been edited.');
             $entityManager->remove($table);
             $entityManager->flush();
         }

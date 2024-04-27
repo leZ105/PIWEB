@@ -1,8 +1,66 @@
 {% extends 'baseBack.html.twig' %}
 
 {% block body %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    var ctx = document.getElementById("statsPieChart").getContext("2d");
 
+    var data = {
+        labels: ["Reservations", "Zones", "Tables"],
+        datasets: [{
+            data: [{{ reservation_count }}, {{ zone_count }}, {{ table_count }}],
+            backgroundColor: [
+                "rgba(255, 99, 132, 0.6)",
+                "rgba(54, 162, 235, 0.6)",
+                "rgba(255, 206, 86, 0.6)"
+            ],
+            hoverOffset: 4
+        }]
+    };
 
+    var myPieChart = new Chart(ctx, {
+        type: "pie",
+        data: data,
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: "top"
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(tooltipItem) {
+                            return tooltipItem.label + ": " + tooltipItem.raw;
+                        }
+                    }
+                }
+            }
+        }
+    });
+});
+</script>
+<div class="container" style="padding: 20px;">
+    <h1 class="mb-4">Home Back Stats</h1>
+
+    <!-- Basic counts -->
+    <div class="row">
+        <div class="col-md-4">
+            <h3>Total Reservations: {{ reservation_count }}</h3>
+        </div>
+        <div class="col-md-4">
+            <h3>Total Zones: {{ zone_count }}</h3>
+        </div>
+        <div class="col-md-4">
+            <h3>Total Tables: {{ table_count }}</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Stats Distribution</h3>
+            <canvas id="statsPieChart" width="400" height="400"></canvas>
+        </div>
+    </div>
           <div class="row">
             <div class="col-xl-6 grid-margin stretch-card flex-column">
               <h5 class="mb-2 text-titlecase mb-4">Status statistics</h5>

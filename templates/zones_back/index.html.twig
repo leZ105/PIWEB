@@ -3,6 +3,8 @@
 {% block title %}Zones Index{% endblock %}
 
 {% block body %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">
     <div class="container mt-4">
         <h1 class="text-center">Zones Index</h1>
 
@@ -10,7 +12,9 @@
         <div class="form-group">
             <input type="text" id="searchInput" class="form-control" placeholder="Search by Nom or Description">
         </div>
-
+    <div class="mt-3 mb-3 text-right">
+        <a href="{{ path('app_zones_export_pdf') }}" class="btn btn-danger">Export to PDF</a>
+    </div>
         <!-- Table -->
         <table class="table table-bordered mt-4">
             <thead class="thead-dark">

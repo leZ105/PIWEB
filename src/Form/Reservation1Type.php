@@ -10,31 +10,42 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType; 
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
 class Reservation1Type extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('idC')
-            ->add('zone', EntityType::class, [
-                'class' => Zones::class,
-                'choice_label' => 'nom',
-            ])
-            ->add('tableId', EntityType::class, [ 
-                'class' => Tables::class,
-                'choice_label' => 'tableId', 
-            ])
-            ->add('dater')
-            ->add('status', ChoiceType::class, [
-                'choices' => [
-                    'On Hold' => 'on_hold',
-                    'In Progress' => 'in_progress',
-                    'Completed' => 'completed',
-                    'Cancelled' => 'cancelled',
-                ],
-                'attr' => ['class' => 'form-control']
-            ])
+        ->add('idC', TextType::class, [
+            'required' => false,  // Make field not required
+        ])
+        ->add('zone', EntityType::class, [
+            'class' => Zones::class,
+            'choice_label' => 'nom',
+            'required' => false,  // Make field not required
+        ])
+        ->add('tableId', EntityType::class, [
+            'class' => Tables::class,
+            'choice_label' => 'tableId',
+            'required' => false,  // Make field not required
+        ])
+        ->add('dater', DateType::class, [
+            'required' => false,
+            'widget' => 'single_text',
+            'attr' => ['class' => 'datepicker'],
+        ])
+        ->add('status', ChoiceType::class, [
+            'choices' => [
+                'On Hold' => 'on_hold',
+                'In Progress' => 'in_progress',
+                'Completed' => 'completed',
+                'Cancelled' => 'cancelled',
+            ],
+            'data' => 'in_progress',  // Default selected value
+            'required' => false,  // Make field not required
+        ]);
         ;
     }
 

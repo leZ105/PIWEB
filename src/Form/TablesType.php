@@ -6,15 +6,23 @@ use App\Entity\Tables;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 
 class TablesType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nomZone')
-            ->add('capaciteT')
-        ;
+        ->add('nomZone', EntityType::class, [
+            'class' => Zones::class,
+            'choice_label' => 'nom',
+            'placeholder' => 'Select a zone',
+            'required' => false,
+        ])
+        ->add('capaciteT', IntegerType::class, [
+            'required' => false,
+        ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

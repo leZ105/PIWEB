@@ -14,7 +14,7 @@ class Zones
     #[ORM\GeneratedValue(strategy: "IDENTITY")]
     private $zoneId;
 
-    #[ORM\Column(name: "nom", type: "string", length: 255, nullable: false,unique : true)]
+    #[ORM\Column(name: "nom", type: "string", length: 255, nullable: false)]
     #[Assert\NotBlank(message:"Nom cannot be blank")]
     private $nom;
 

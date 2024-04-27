@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Flasher\Toastr\Prime\ToastrFactory;
 
 #[Route('/zones')]
 class ZonesController extends AbstractController
@@ -35,6 +36,7 @@ class ZonesController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($zone);
             $entityManager->flush();
+            $flasher->success('Entity created successfully!')->priority(1);
 
             return $this->redirectToRoute('app_zones_index', [], Response::HTTP_SEE_OTHER);
         }
