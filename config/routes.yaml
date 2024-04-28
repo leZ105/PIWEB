@@ -1,0 +1,15 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+like_plat:
+    path: /plat/{idPlat}/like
+    controller: App\Controller\PlatController::likePlat
+
+dislike_plat:
+    path: /plat/{idPlat}/dislike
+    controller: App\Controller\PlatController::dislikePlat
+
+export_pdf:
+    path: /export-pdf
+    controller: App\Controller\PlatBackController::exportPdf
+    methods: [GET]
