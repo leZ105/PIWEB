@@ -54,6 +54,8 @@ class ReservationController extends AbstractController
         $form->handleRequest($request);
     
         if ($form->isSubmitted() && $form->isValid()) {
+            $this->sendEmail("Eya.Benslimen@esprit.tn", "Confirmation", "Votre Reservation est confirmé");
+
             $entityManager->persist($reservation);
             $entityManager->flush();
     
@@ -102,7 +104,6 @@ class ReservationController extends AbstractController
     
         $mailer->send($email);
     }
-
     #[Route('/{idR}', name: 'app_reservation_show', methods: ['GET'])]
     public function show(Reservation $reservation): Response
     {
